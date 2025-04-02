@@ -8,9 +8,10 @@ public class ReverseEachWordOfString {
 
 		String str = "Java is Object Oriented";
 
-
 		Stream.of(str.split(" ")).map(word -> new StringBuilder(word).reverse()).forEach(System.out::println);
 
+		//
+		
 	}
 
 }
