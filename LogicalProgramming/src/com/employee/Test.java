@@ -1,6 +1,7 @@
 package com.employee;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Map;
@@ -52,7 +53,18 @@ public class Test {
     		.collect(Collectors.groupingBy(Employee::getGender, Collectors.averagingDouble(Employee::getAge)));
     
     System.out.println(avgAgeOfMaleAndFemale);
+    
+    //find highest paid employee
+    
+   Employee emp= employeeList.stream().max(Comparator.comparingDouble(Employee::getSalary)).get();
+   
+   System.out.println(emp);
+   
+   //second approach
+   
+  Employee highestpaidEmploee = employeeList.stream().collect(Collectors.maxBy(Comparator.comparingDouble(Employee::getSalary))).get();
 	
+  System.out.println(highestpaidEmploee);
 	}
 
 }
