@@ -34,7 +34,7 @@ public class Test {
 		
 		
 	Map<String, Long> noOfMaleAndFemaleEmp = employeeList.stream()
-											.collect(Collectors.groupingBy(Employee::getGender, Collectors.counting()));
+			.collect(Collectors.groupingBy(Employee::getGender, Collectors.counting()));
 	
 	System.out.println(noOfMaleAndFemaleEmp);
 	
@@ -44,6 +44,14 @@ public class Test {
 	            .map(Employee::getDepartment)
 	            .distinct()
 	            .forEach(System.out::println);
+	
+	
+	//Average age of male and female employee
+	
+    Map<String, Double> avgAgeOfMaleAndFemale = employeeList.stream()
+    		.collect(Collectors.groupingBy(Employee::getGender, Collectors.averagingDouble(Employee::getAge)));
+    
+    System.out.println(avgAgeOfMaleAndFemale);
 	
 	}
 
