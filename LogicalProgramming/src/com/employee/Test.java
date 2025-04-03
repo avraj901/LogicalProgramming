@@ -2,6 +2,7 @@ package com.employee;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.DoubleSummaryStatistics;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Map;
@@ -84,21 +85,61 @@ public class Test {
 
 		// Find youngest male emp in product development department
 
-		Employee minAgeOfEmp = employeeList.stream()
-				.filter(empd -> empd.getDepartment().equals("Product Development"))
-				.filter(empg -> empg.getGender().equals("Male"))
-				.min(Comparator.comparing(Employee::getAge)).get();
+		Employee minAgeOfEmp = employeeList.stream().filter(empd -> empd.getDepartment().equals("Product Development"))
+				.filter(empg -> empg.getGender().equals("Male")).min(Comparator.comparing(Employee::getAge)).get();
 
 		System.out.println(minAgeOfEmp);
-		
-		//both filter added in one filter
+
+		// both filter added in one filter
 
 		Employee minAgeOfEmpl = employeeList.stream()
-				.filter(empd -> empd.getDepartment().equals("Product Development") 
-						&& empd.getGender().equals("Male"))
+				.filter(empd -> empd.getDepartment().equals("Product Development") && empd.getGender().equals("Male"))
 				.min(Comparator.comparing(Employee::getAge)).get();
 
 		System.out.println(minAgeOfEmpl);
+
+		// find most working experience
+
+		Employee mostWorkExp = employeeList.stream().sorted(Comparator.comparing(Employee::getYearOfJoining))
+				.findFirst().get();
+
+		System.out.println(mostWorkExp);
+
+		// find male and female employee in sales and marketing department
+
+		Map<String, Long> countMaleAndFemaleEmpInSales = employeeList.stream()
+				.filter(empDep -> empDep.getDepartment().equals("Sales And Marketing"))
+				.collect(Collectors.groupingBy(Employee::getGender, Collectors.counting()));
+
+		System.out.println("countMaleAndFemaleEmpInSales : : " + countMaleAndFemaleEmpInSales);
+
+		// List down the names of all employee in each department
+
+		Map<String, List<Employee>> EmpListByDepartment = employeeList.stream()
+				.collect(Collectors.groupingBy(Employee::getDepartment));
+
+		System.out.println(EmpListByDepartment);
+
+		// Find average salary and total salary
+
+		DoubleSummaryStatistics summaryStatistics = employeeList.stream()
+				.collect(Collectors.summarizingDouble(Employee::getSalary));
+
+		System.out.println("Sum :: " + summaryStatistics.getSum());
+		System.out.println("Average ::" + summaryStatistics.getAverage());
+
+		// Separate all the employee who are younger or equal to 25
+
+		Map<Boolean, List<Employee>> EmplByAge = employeeList.stream()
+				.collect(Collectors.partitioningBy(empAge -> empAge.getAge() >= 25));
+
+		System.out.println(EmplByAge);
+
+		// Find oldest employee
+		Employee maxAgeEmp = employeeList.stream().max(Comparator.comparing(Employee::getAge)).get();
+
+		System.out.println("Max age Employee : " + maxAgeEmp);
+
 	}
 
 }
