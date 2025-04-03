@@ -10,9 +10,8 @@ public class Test {
 
 	public static void main(String[] args) {
 
-		
 		List<Employee> employeeList = new ArrayList<>();
-		
+
 		employeeList.add(new Employee(111, "Jiya Brein", 32, "Female", "HR", 2011, 25000.0));
 		employeeList.add(new Employee(122, "Paul Niksui", 25, "Male", "Sales And Marketing", 2015, 13500.0));
 		employeeList.add(new Employee(133, "Martin Theron", 29, "Male", "Infrastructure", 2012, 18000.0));
@@ -31,40 +30,43 @@ public class Test {
 		employeeList.add(new Employee(266, "Sanvi Pandey", 26, "Female", "Product Development", 2015, 28900.0));
 		employeeList.add(new Employee(277, "Anuj Chettiar", 31, "Male", "Product Development", 2012, 35700.0));
 
-	//Find male and female employee
-		
-		
-	Map<String, Long> noOfMaleAndFemaleEmp = employeeList.stream()
-			.collect(Collectors.groupingBy(Employee::getGender, Collectors.counting()));
-	
-	System.out.println(noOfMaleAndFemaleEmp);
-	
-	//Find name of the all department
-	
-	employeeList.stream()
-	            .map(Employee::getDepartment)
-	            .distinct()
-	            .forEach(System.out::println);
-	
-	
-	//Average age of male and female employee
-	
-    Map<String, Double> avgAgeOfMaleAndFemale = employeeList.stream()
-    		.collect(Collectors.groupingBy(Employee::getGender, Collectors.averagingDouble(Employee::getAge)));
-    
-    System.out.println(avgAgeOfMaleAndFemale);
-    
-    //find highest paid employee
-    
-   Employee emp= employeeList.stream().max(Comparator.comparingDouble(Employee::getSalary)).get();
-   
-   System.out.println(emp);
-   
-   //second approach
-   
-  Employee highestpaidEmploee = employeeList.stream().collect(Collectors.maxBy(Comparator.comparingDouble(Employee::getSalary))).get();
-	
-  System.out.println(highestpaidEmploee);
+		// Find male and female employee
+
+		Map<String, Long> noOfMaleAndFemaleEmp = employeeList.stream()
+				.collect(Collectors.groupingBy(Employee::getGender, Collectors.counting()));
+
+		System.out.println(noOfMaleAndFemaleEmp);
+
+		// Find name of the all department
+
+		employeeList.stream().map(Employee::getDepartment).distinct().forEach(System.out::println);
+
+		// Average age of male and female employee
+
+		Map<String, Double> avgAgeOfMaleAndFemale = employeeList.stream()
+				.collect(Collectors.groupingBy(Employee::getGender, Collectors.averagingDouble(Employee::getAge)));
+
+		System.out.println(avgAgeOfMaleAndFemale);
+
+		// find highest paid employee
+
+		Employee emp = employeeList.stream().max(Comparator.comparingDouble(Employee::getSalary)).get();
+
+		System.out.println(emp);
+
+		// second approach
+
+		Employee highestpaidEmploee = employeeList.stream()
+				.collect(Collectors.maxBy(Comparator.comparingDouble(Employee::getSalary))).get();
+
+		System.out.println(highestpaidEmploee);
+
+		// Find all the employee who have joined after 2015
+
+		List<Employee> empList = employeeList.stream().filter(empl -> empl.getYearOfJoining() > 2015)
+				.collect(Collectors.toList());
+
+		System.out.println(empList);
 	}
 
 }
