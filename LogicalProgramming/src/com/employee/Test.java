@@ -67,6 +67,13 @@ public class Test {
 				.collect(Collectors.toList());
 
 		System.out.println(empList);
+
+		// count the number of employee in each department
+
+		Map<String, Long> departmentCount = employeeList.stream()
+				.collect(Collectors.groupingBy(Employee::getDepartment, Collectors.counting()));
+
+		System.out.println(departmentCount);
 	}
 
 }
