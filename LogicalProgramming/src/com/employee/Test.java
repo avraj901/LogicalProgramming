@@ -33,9 +33,17 @@ public class Test {
 	//Find male and female employee
 		
 		
-	Map<String, Long> noOfMaleAndFemaleEmp =	employeeList.stream().collect(Collectors.groupingBy(Employee::getGender, Collectors.counting()));
+	Map<String, Long> noOfMaleAndFemaleEmp = employeeList.stream()
+											.collect(Collectors.groupingBy(Employee::getGender, Collectors.counting()));
 	
 	System.out.println(noOfMaleAndFemaleEmp);
+	
+	//Find name of the all department
+	
+	employeeList.stream()
+	            .map(Employee::getDepartment)
+	            .distinct()
+	            .forEach(System.out::println);
 	
 	}
 
