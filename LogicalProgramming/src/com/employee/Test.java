@@ -74,6 +74,31 @@ public class Test {
 				.collect(Collectors.groupingBy(Employee::getDepartment, Collectors.counting()));
 
 		System.out.println(departmentCount);
+
+		// average salary of each department
+
+		Map<String, Double> avgSalaryOfEachDept = employeeList.stream().collect(
+				Collectors.groupingBy(Employee::getDepartment, Collectors.averagingDouble(Employee::getSalary)));
+
+		System.out.println(avgSalaryOfEachDept);
+
+		// Find youngest male emp in product development department
+
+		Employee minAgeOfEmp = employeeList.stream()
+				.filter(empd -> empd.getDepartment().equals("Product Development"))
+				.filter(empg -> empg.getGender().equals("Male"))
+				.min(Comparator.comparing(Employee::getAge)).get();
+
+		System.out.println(minAgeOfEmp);
+		
+		//both filter added in one filter
+
+		Employee minAgeOfEmpl = employeeList.stream()
+				.filter(empd -> empd.getDepartment().equals("Product Development") 
+						&& empd.getGender().equals("Male"))
+				.min(Comparator.comparing(Employee::getAge)).get();
+
+		System.out.println(minAgeOfEmpl);
 	}
 
 }
